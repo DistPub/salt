@@ -2,7 +2,7 @@
 
 import argparse, os
 
-all_targets = ['unittest_salt', 'minimal_salt', 'eval_single_salt', 'eval_batch_salt']
+all_targets = ['unittest_salt', 'minimal_salt', 'eval_single_salt', 'eval_batch_salt', 'pysaltrouting']
 run_files = 'src/salt/base/flute/POST9.dat src/salt/base/flute/POWV9.dat'
 
 def run(command):
@@ -49,7 +49,10 @@ for target in build_targets:
     run('cmake --build {} --target {} -- {}'.format(args.build_dir, target, args.make_options))
 cp_targets = all_targets if build_targets == [''] else build_targets
 for target in cp_targets:
-    run('cp -u {}/{} {}'.format(args.build_dir, target, args.run_dir))
+    if target == 'pysaltrouting':
+        run('cp -u {}/{} {}'.format(args.build_dir, f'{target}.so', args.run_dir))
+    else:
+        run('cp -u {}/{} {}'.format(args.build_dir, target, args.run_dir))
 
 # unit test
 if args.unittest:

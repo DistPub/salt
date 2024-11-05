@@ -5,6 +5,7 @@ cmake_minimum_required(VERSION 3.5.1)
 set(CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_C_COMPILER ${CMAKE_CXX_COMPILER}) # use g++ for .c files (flute)
+set(CMAKE_POSITION_INDEPENDENT_CODE TRUE)
 
 include_directories(${PROJECT_SOURCE_DIR})
 file(GLOB SALT_SRCS salt/*.cpp salt/*/*.cpp salt/base/flute/*.c)
@@ -27,3 +28,17 @@ target_link_libraries(eval_single_salt salt)
 # eval_batch_salt
 add_executable(eval_batch_salt examples/eval_batch_main.cpp $<TARGET_OBJECTS:other_methods>)
 target_link_libraries(eval_batch_salt salt)
+
+# python binding
+execute_process(
+    COMMAND python3
+    -m pybind11
+    --cmakedir
+    OUTPUT_VARIABLE pybind11_DIR
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+message(STATUS "pybind11 cmakedir: ${pybind11_DIR}")
+find_package(pybind11 CONFIG REQUIRED)
+pybind11_add_module(pysaltrouting NO_EXTRAS examples/pysaltrouting.cpp)
+target_link_libraries(pysaltrouting PRIVATE salt)
+set_target_properties(pysaltrouting PROPERTIES PREFIX "" SUFFIX ".so")
