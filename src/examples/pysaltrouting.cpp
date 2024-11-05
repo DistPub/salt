@@ -3,6 +3,9 @@
 #include "salt/base/eval.h"
 #include <string>
 
+#define STRINGIFY(x) #x
+#define MACRO_STRINGIFY(x) STRINGIFY(x)
+
 namespace py = pybind11;
 
 void net_file(const std::string& netFile, double eps) {
@@ -30,4 +33,9 @@ void net_file(const std::string& netFile, double eps) {
 PYBIND11_MODULE(pysaltrouting, m) {
     m.doc() = "python binding for salt";
     m.def("net_file", &net_file, "routing net file", py::arg("netFile"), py::arg("eps") = 1.101);
+#ifdef VERSION_INFO
+    m.attr("__version__") = MACRO_STRINGIFY(VERSION_INFO);
+#else
+    m.attr("__version__") = "dev";
+#endif
 } 
