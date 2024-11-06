@@ -1,1 +1,4 @@
-include salt/base/flute/*.dat
+graft salt
+include examples/pysaltrouting.cpp
+include CMakeLists.txt
+include MANIFEST.in

@@ -4,7 +4,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-from setuptools import Extension, find_packages, setup
+from setuptools import Extension, find_namespace_packages, setup
 from setuptools.command.build_ext import build_ext
 
 # Convert distutils Windows platform specifiers to CMake -A arguments
@@ -132,8 +132,11 @@ setup(
     author_email="xiaopengyou2no1@gmail.com",
     description="python binding for salt",
     long_description="",
-    packages=find_packages(),
+    packages=find_namespace_packages(),
+    package_dir={"": "."},
     include_package_data=True,
+    install_requires=['pybind11'],
+    package_data={"salt.base.flute": ["*.dat"]},
     ext_modules=[CMakeExtension("pysaltrouting")],
     cmdclass={"build_ext": CMakeBuild},
     zip_safe=False,

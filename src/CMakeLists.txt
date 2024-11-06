@@ -9,8 +9,11 @@ set(CMAKE_POSITION_INDEPENDENT_CODE TRUE)
 
 include_directories(${PROJECT_SOURCE_DIR})
 file(GLOB SALT_SRCS salt/*.cpp salt/*/*.cpp salt/base/flute/*.c)
-file(GLOB OTHER_METHODS_SRCS other_methods/*.cpp)
 add_library(salt STATIC ${SALT_SRCS})
+
+if(NOT SETUP_VERSION_INFO)
+
+file(GLOB OTHER_METHODS_SRCS other_methods/*.cpp)
 add_library(other_methods OBJECT ${OTHER_METHODS_SRCS})
 
 # unittest_salt
@@ -28,6 +31,8 @@ target_link_libraries(eval_single_salt salt)
 # eval_batch_salt
 add_executable(eval_batch_salt examples/eval_batch_main.cpp $<TARGET_OBJECTS:other_methods>)
 target_link_libraries(eval_batch_salt salt)
+
+endif()
 
 # python binding
 execute_process(

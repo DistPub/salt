@@ -3,5 +3,5 @@
 build/*
 run/*
 src/build/*
-src/*.egg-info
+*.egg-info
 src/dist/*
