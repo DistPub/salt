@@ -119,7 +119,7 @@ class CMakeBuild(build_ext):
             ["cmake", ext.sourcedir, *cmake_args], cwd=build_temp, check=True
         )
         subprocess.run(
-            ["cmake", "--build", ".", "--target", "pysaltrouting", *build_args], cwd=build_temp, check=True
+            ["cmake", "--build", ".", *build_args], cwd=build_temp, check=True
         )
 
 
@@ -132,11 +132,10 @@ setup(
     author_email="xiaopengyou2no1@gmail.com",
     description="python binding for salt",
     long_description="",
-    packages=find_namespace_packages(),
-    package_dir={"": "."},
-    include_package_data=True,
-    package_data={"salt.base.flute": ["*.dat"]},
-    ext_modules=[CMakeExtension("pysaltrouting")],
+    packages=['pysaltrouting.data'],
+    package_dir={"pysaltrouting.data": "salt/base/flute"},
+    package_data={"pysaltrouting.data": ["*.dat"]},
+    ext_modules=[CMakeExtension("pysaltrouting.pysalt")],
     cmdclass={"build_ext": CMakeBuild},
     zip_safe=False,
     extras_require={},

@@ -30,7 +30,7 @@ void net_file(const std::string& netFile, double eps) {
     tree.Write("SALT");
 }
 
-PYBIND11_MODULE(pysaltrouting, m) {
+PYBIND11_MODULE(pysalt, m) {
     m.doc() = "python binding for salt";
     m.def("net_file", &net_file, "routing net file", py::arg("netFile"), py::arg("eps") = 1.101);
 #ifdef VERSION_INFO

@@ -1,4 +1,4 @@
 graft salt
-include examples/pysaltrouting.cpp
+include examples/pysalt.cpp
 include CMakeLists.txt
 include MANIFEST.in
