@@ -1,6 +1,7 @@
 #include <pybind11/pybind11.h>
 #include "salt/salt.h"
 #include "salt/base/eval.h"
+#include "salt/base/flute/flute.h"
 #include <string>
 
 #define STRINGIFY(x) #x
@@ -8,7 +9,8 @@
 
 namespace py = pybind11;
 
-void net_file(const std::string& netFile, double eps) {
+void net_file(const std::string& netFile, double eps, const std::string& postfile, const std::string powvfile) {
+    // TODO: ASSIGN FILE TO C GLOBAL VAR
     salt::Net net;
     net.Read(netFile);
     printlog("Run SALT algorithm on net", net.name, "with", net.pins.size(), "pins using epsilon =", eps);
@@ -32,7 +34,7 @@ void net_file(const std::string& netFile, double eps) {
 
 PYBIND11_MODULE(pysalt, m) {
     m.doc() = "python binding for salt";
-    m.def("net_file", &net_file, "routing net file", py::arg("netFile"), py::arg("eps") = 1.101);
+    m.def("net_file", &net_file, "routing net file", py::arg("netFile"), py::arg("eps") = 1.101, py::arg("postfile") = NULL, py::arg("powvfile") = NULL);
 #ifdef VERSION_INFO
     m.attr("__version__") = MACRO_STRINGIFY(VERSION_INFO);
 #else

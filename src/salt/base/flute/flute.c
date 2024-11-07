@@ -18,6 +18,8 @@ namespace flute {
 #endif
 
 int numgrp[10]={0,0,0,0,6,30,180,1260,10080,90720};
+char *POSTFILE_PATH = NULL;
+char *POWVFILE_PATH = NULL;
 
 struct csoln 
 {
@@ -70,14 +72,22 @@ void readLUT()
             charnum[i] = 0;
     }
 
-    fpwv=fopen(POWVFILE, "r");
+    if (POWVFILE_PATH != NULL) {
+        fpwv=fopen(POWVFILE_PATH, "r");
+    } else {
+        fpwv=fopen(POWVFILE, "r");
+    }
     if (fpwv == NULL) {
         printf("Error in opening %s\n", POWVFILE);
         exit(1);
     }
 
 #if ROUTING==1
-    fprt=fopen(POSTFILE, "r");
+    if (POSTFILE_PATH != NULL) {
+        fprt=fopen(POSTFILE_PATH, "r");
+    } else {
+        fprt=fopen(POSTFILE, "r");
+    }
     if (fprt == NULL) {
         printf("Error in opening %s\n", POSTFILE);
         exit(1);
