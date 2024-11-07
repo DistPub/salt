@@ -135,7 +135,6 @@ setup(
     packages=find_namespace_packages(),
     package_dir={"": "."},
     include_package_data=True,
-    install_requires=['pybind11'],
     package_data={"salt.base.flute": ["*.dat"]},
     ext_modules=[CMakeExtension("pysaltrouting")],
     cmdclass={"build_ext": CMakeBuild},
