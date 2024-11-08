@@ -51,6 +51,8 @@ typedef struct
 } Tree;
 
 // User-Callable Functions
+extern char *POSTFILE_PATH;
+extern char *POWVFILE_PATH;
 extern void readLUT();
 extern DTYPE flute_wl(int d, DTYPE x[], DTYPE y[], int acc);
 //Macro: DTYPE flutes_wl(int d, DTYPE xs[], DTYPE ys[], int s[], int acc);

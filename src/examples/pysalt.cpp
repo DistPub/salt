@@ -11,6 +11,14 @@ namespace py = pybind11;
 
 void net_file(const std::string& netFile, double eps, const std::string& postfile, const std::string powvfile) {
     // TODO: ASSIGN FILE TO C GLOBAL VAR
+    if (postfile != "") {
+        flute::POSTFILE_PATH = new char[postfile.length() + 1];
+        strcpy(flute::POSTFILE_PATH, postfile.c_str());
+    }
+    if (powvfile != "") {
+        flute::POWVFILE_PATH = new char[powvfile.length() + 1];
+        strcpy(flute::POWVFILE_PATH, powvfile.c_str());
+    }
     salt::Net net;
     net.Read(netFile);
     printlog("Run SALT algorithm on net", net.name, "with", net.pins.size(), "pins using epsilon =", eps);
@@ -34,7 +42,7 @@ void net_file(const std::string& netFile, double eps, const std::string& postfil
 
 PYBIND11_MODULE(pysalt, m) {
     m.doc() = "python binding for salt";
-    m.def("net_file", &net_file, "routing net file", py::arg("netFile"), py::arg("eps") = 1.101, py::arg("postfile") = NULL, py::arg("powvfile") = NULL);
+    m.def("net_file", &net_file, "routing net file", py::arg("netFile"), py::arg("eps") = 1.101, py::arg("postfile") = "", py::arg("powvfile") = "");
 #ifdef VERSION_INFO
     m.attr("__version__") = MACRO_STRINGIFY(VERSION_INFO);
 #else
