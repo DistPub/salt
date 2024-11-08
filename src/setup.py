@@ -123,15 +123,20 @@ class CMakeBuild(build_ext):
         )
 
 
+def read(f):
+    return open(f, 'r', encoding='utf-8').read()
+
+
 # The information here can also be placed in setup.cfg - better separation of
 # logic and declaration, and simpler if you include description/version in a file.
 setup(
     name="pysaltrouting",
-    version="0.0.1",
+    version="0.1.2",
     author="Smite Chow",
     author_email="xiaopengyou2no1@gmail.com",
     description="python binding for salt",
-    long_description="",
+    long_description=read('README.md'),
+    long_description_content_type='text/markdown',
     packages=['pysaltrouting.data'],
     package_dir={"pysaltrouting.data": "salt/base/flute"},
     package_data={"pysaltrouting.data": ["*.dat"]},
